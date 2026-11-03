@@ -1,12 +1,12 @@
 {
-  "name": "READWISE \u2013 Read Practice Improve",
-  "short_name": "READWISE",
+  "name": "I-RISE READ \u2013 A Guided Digital Oral Reading Companion",
+  "short_name": "I-RISE READ",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f6f8fc",
-  "theme_color": "#2457a6",
-  "description": "Student oral reading practice and teacher review tool.",
+  "background_color": "#f5f8fc",
+  "theme_color": "#174b8b",
+  "description": "Read first, check your reading, and practice again.",
   "icons": [
     {
       "src": "icon.svg",
