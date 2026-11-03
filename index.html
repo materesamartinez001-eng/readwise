@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2457a6">
+<meta name="description" content="READWISE student oral reading practice and teacher review tool.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>READWISE – Read, Practice, Improve</title>
+<style>
+:root{--blue:#2457a6;--blue2:#173e7a;--ink:#172033;--muted:#64748b;--line:#dbe3ef;--soft:#f3f6fb;--white:#fff;--green:#e7f6ec;--red:#fff0ee}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:#f6f8fc;color:var(--ink);line-height:1.5}
+header{background:linear-gradient(120deg,var(--blue2),var(--blue));color:white;padding:18px 16px}
+.wrap{max-width:900px;margin:auto;padding:16px}.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:14px;background:white;color:var(--blue);display:grid;place-items:center;font-size:25px;font-weight:900}.brand h1{font-size:1.45rem;margin:0}.brand p{margin:0;font-size:.88rem;opacity:.9}
+main{display:grid;gap:16px}.card{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 4px 16px #152b4d0b}
+h2{font-size:1.15rem;margin:0 0 10px}p{margin:7px 0}.muted{color:var(--muted);font-size:.92rem}
+label{display:block;font-weight:650;margin:10px 0 5px}input,select,textarea{width:100%;font:inherit;border:1px solid #cbd5e1;border-radius:11px;padding:11px;background:white;color:var(--ink);min-height:44px}
+textarea{min-height:100px;resize:vertical}.passage{background:var(--soft);border-radius:13px;padding:16px;font-size:1.15rem;line-height:1.9}
+button{font:inherit;font-weight:700;border:1px solid var(--line);border-radius:11px;padding:11px 15px;min-height:44px;background:white;color:var(--ink);cursor:pointer}
+button.primary{background:var(--blue);border-color:var(--blue);color:white}button:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:9px}.row>*{flex:1}.status{display:inline-block;border:1px solid var(--line);background:var(--soft);padding:3px 10px;border-radius:999px;font-size:.8rem}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.stat{background:var(--soft);border-radius:12px;padding:12px}.stat small{display:block;color:var(--muted)}.stat strong{font-size:1.55rem}
+.word{display:inline-block;padding:3px 5px;margin:2px;border-radius:5px}.match{background:var(--green)}.flag{background:var(--red);text-decoration:underline wavy #b42318}
+.note{font-size:.83rem;color:var(--muted)}[hidden]{display:none!important}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:15px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.wrap{padding:22px}}
+@media print{header,.no-print,footer{display:none!important}body{background:white}.card{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<header><div class="wrap brand"><div class="logo">R</div><div><h1>READWISE</h1><p>Read • Practice • Improve</p></div></div></header>
+<div class="wrap"><main>
+<section class="card">
+<h2>Welcome, Reader! 👋</h2>
+<p class="muted">Choose a passage, read aloud clearly, and check your practice report. Take your time. Practice helps you improve.</p>
+<label for="learner">Learner code (optional)</label><input id="learner" maxlength="40" placeholder="Use a code instead of sensitive personal details">
+<label for="choice">Choose a reading passage</label>
+<select id="choice"><option value="school">The Importance of Reading</option><option value="environment">Protecting Our Environment</option><option value="technology">Using Technology Wisely</option><option value="custom">Teacher's Custom Passage</option></select>
+<div id="customBox" hidden><label for="custom">Paste the teacher's passage</label><textarea id="custom" placeholder="Paste passage here"></textarea></div>
+<label>Reading passage</label><div id="passage" class="passage"></div>
+<div class="row no-print" style="margin-top:10px"><button id="listen">🔊 Listen to passage</button><button id="stopVoice">Stop audio</button></div>
+</section>
+<section class="card">
+<h2>Your reading session <span id="status" class="status">Ready</span></h2>
+<p class="muted">Allow microphone access when asked. Read naturally and clearly.</p>
+<div class="row no-print"><button id="start" class="primary">🎙️ Start reading</button><button id="finish" disabled>Finish reading</button></div>
+<p id="support" class="note" aria-live="polite"></p>
+<label>Recognized words / transcript</label><textarea id="transcript" placeholder="Your spoken words appear here if supported. You may also type a transcript for practice."></textarea>
+<div class="row no-print"><button id="analyze" class="primary">Check my reading</button><button id="clear">Clear transcript</button></div>
+<p class="note">Speech recognition depends on your browser and may require internet. Some browsers send audio to their speech service. This version does not save audio recordings or send learner reports to a READWISE server.</p>
+</section>
+<section id="report" class="card" hidden>
+<h2>Your reading report</h2>
+<div class="grid">
+<div class="stat"><small>Estimated text match*</small><strong id="accuracy">—</strong></div>
+<div class="stat"><small>Possible substitutions</small><strong id="subs">0</strong></div>
+<div class="stat"><small>Possible omissions</small><strong id="omits">0</strong></div>
+<div class="stat"><small>Possible repetitions</small><strong id="reps">0</strong></div>
+</div>
+<p class="note">*This is a text-comparison estimate, not a validated pronunciation or fluency score.</p>
+<h3 style="font-size:1rem">Passage comparison</h3><div id="marked" class="passage"></div>
+<p id="feedback"></p>
+<div class="row no-print"><button id="print">Print / Save report</button><button id="again" class="primary">Practice again</button></div>
+</section>
+<section class="card">
+<h2>Teacher review</h2>
+<p class="muted">Verify possible errors before recording results. A speech-to-text mismatch is not automatically a learner error.</p>
+<div class="grid">
+<div><label for="vmis">Verified mispronunciations</label><input id="vmis" type="number" min="0" value="0"></div>
+<div><label for="vsub">Verified substitutions</label><input id="vsub" type="number" min="0" value="0"></div>
+<div><label for="vrep">Verified repetitions</label><input id="vrep" type="number" min="0" value="0"></div>
+<div><label for="vomit">Verified omissions</label><input id="vomit" type="number" min="0" value="0"></div>
+</div>
+<label for="notes">Teacher feedback / notes</label><textarea id="notes" placeholder="Example: Practice unfamiliar words and reread the second sentence slowly."></textarea>
+<div class="row no-print"><button id="csv" class="primary">Download teacher review (CSV)</button></div>
+</section>
+</main><footer>READWISE prototype • Teacher-guided practice • Possible errors require teacher verification</footer></div>
+<script src="app.js"></script>
+</body></html>
