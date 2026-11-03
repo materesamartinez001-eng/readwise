@@ -1,18 +1,9 @@
 {
-  "name": "I-RISE READ \u2013 A Guided Digital Oral Reading Companion",
+  "name": "I-RISE READ",
   "short_name": "I-RISE READ",
   "start_url": "./",
-  "scope": "./",
   "display": "standalone",
-  "background_color": "#f5f8fc",
-  "theme_color": "#174b8b",
-  "description": "Read first, check your reading, and practice again.",
-  "icons": [
-    {
-      "src": "icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
-  ]
+  "background_color": "#f7faf8",
+  "theme_color": "#123b35",
+  "icons": []
 }
