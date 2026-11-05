@@ -44,6 +44,7 @@ footer{text-align:center;padding:25px;color:#60747b}
 <button class="active" onclick="showPage('decoding',this)">1. Decoding</button>
 <button onclick="showPage('vocabulary',this)">2. Vocabulary</button>
 <button onclick="showPage('comprehension',this)">3. Reading Comprehension</button>
+<button onclick="showPage('practice',this)">4. Interactive Practice</button>
 </nav>
 
 <section id="decoding" class="panel active">
@@ -181,6 +182,48 @@ Now, he sleeps well.
 </ol>
 </section>
 
+
+<section id="practice" class="panel">
+<div class="tag">I-RISE READ · INTERACTIVE PRACTICE</div>
+<h2>LET'S PRACTICE!</h2>
+<p>Read each question carefully and select the correct answer.</p>
+
+<h3>Activity 1 – Decoding</h3>
+<p>What sound do you get when you combine B + A?</p>
+<label><input type="radio" name="q1" value="BA"> BA</label>
+<label><input type="radio" name="q1" value="BE"> BE</label>
+<label><input type="radio" name="q1" value="BO"> BO</label>
+<p id="feedback1"></p>
+<button onclick="checkAnswer('q1','BA','feedback1')">Check Answer</button>
+<hr>
+
+<h3>Activity 2 – Vocabulary</h3>
+<p>Which of these is a vegetable?</p>
+<label><input type="radio" name="q2" value="MANGO"> Mango</label>
+<label><input type="radio" name="q2" value="CARROT"> Carrot</label>
+<label><input type="radio" name="q2" value="BANANA"> Banana</label>
+<p id="feedback2"></p>
+<button onclick="checkAnswer('q2','CARROT','feedback2')">Check Answer</button>
+<hr>
+
+<h3>Activity 3 – Reading Comprehension</h3>
+<p>Based on the story The Ants, what did the ants see on the ground?</p>
+<label><input type="radio" name="q3" value="CRUMB"> A crumb</label>
+<label><input type="radio" name="q3" value="LEAF"> A leaf</label>
+<label><input type="radio" name="q3" value="FLOWER"> A flower</label>
+<p id="feedback3"></p>
+<button onclick="checkAnswer('q3','CRUMB','feedback3')">Check Answer</button>
+<hr>
+
+<h3>Activity 4 – Question Words</h3>
+<p>Which question word is used to ask about a place?</p>
+<label><input type="radio" name="q4" value="WHO"> Who</label>
+<label><input type="radio" name="q4" value="WHERE"> Where</label>
+<label><input type="radio" name="q4" value="WHEN"> When</label>
+<p id="feedback4"></p>
+<button onclick="checkAnswer('q4','WHERE','feedback4')">Check Answer</button>
+</section>
+
 </main>
 
 <footer>
@@ -194,6 +237,27 @@ document.querySelectorAll('main section.panel').forEach(p=>p.classList.remove('a
 document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
 document.getElementById(id).classList.add('active');
 button.classList.add('active');
+}
+function checkAnswer(question, correct, feedback) {
+    const selected = document.querySelector(
+        'input[name="' + question + '"]:checked'
+    );
+
+    const output = document.getElementById(feedback);
+
+    if (!selected) {
+        output.textContent = "Please select an answer first.";
+        output.style.color = "#b45309";
+        return;
+    }
+
+    if (selected.value === correct) {
+        output.textContent = "Correct! Very good!";
+        output.style.color = "green";
+    } else {
+        output.textContent = "Not quite. Try again!";
+        output.style.color = "red";
+    }
 }
 </script>
 </body>
